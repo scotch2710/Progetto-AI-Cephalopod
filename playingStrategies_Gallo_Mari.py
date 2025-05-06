@@ -1,5 +1,9 @@
 import math
 
+#euristica finale consegnata
+
+
+
 casella_player = 0
 casella_opponent = 0 
 player1 = ""
