@@ -3,6 +3,8 @@ from tkinter import simpledialog, messagebox
 from tkinter import ttk
 import random, itertools, copy, concurrent.futures, threading, time
 
+import playingStrategies_Gallo_Mari 
+
 #import sys
 #sys.path.append("Progetti studenti maggio 2025")
 #sys.path.append(".")
@@ -10,9 +12,9 @@ import random, itertools, copy, concurrent.futures, threading, time
 # EXAMPLE VERSION
 # #######################
 #import playerCephalopod as playerBmodule
-import playerAlpha as playerBmodule
+import playerExampleAlpha as playerBmodule
 #import playerExampleRandom as playerRmodule
-import playerEuristica1 as playerRmodule
+import playerMarllo as playerRmodule
 # #######################
 
 class Game:
@@ -21,6 +23,8 @@ class Game:
     subclass this class and implement `actions`, `result`, `is_terminal`,
     and `utility`. You will also need to set the .initial attribute to the
     initial state; this can be done in the constructor."""
+
+    
 
     def actions(self, state):
         """Return a collection of the allowable moves from this state."""
@@ -318,7 +322,7 @@ class CephalopodGUI:
             # In modalità AI vs AI senza auto, calcola la prossima mossa al click del pulsante "Successivo"
             if (self.player_types.get("Blue") == "ai" and self.player_types.get("Red") == "ai") and not self.auto_mode:
                 if not self.game.is_terminal(self.current_state()):
-                    self.play_turn()
+                    self.turn()
                     self.update_board()
 
     def toggle_auto(self):
@@ -334,7 +338,10 @@ class CephalopodGUI:
             self.play_turn()
             time.sleep(0.5)
         if self.game.is_terminal(self.state_history[-1]):
-            self.show_game_over("La partita è terminata.")
+            if(playingStrategies_Gallo_Mari.casella_player > playingStrategies_Gallo_Mari.casella_opponent):
+                self.show_game_over(f"La partita è terminata. Ha vinto {playingStrategies_Gallo_Mari.player1}! {playingStrategies_Gallo_Mari.casella_player}-{playingStrategies_Gallo_Mari.casella_opponent}")
+            else:
+                self.show_game_over(f"La partita è terminata. Ha vinto {playingStrategies_Gallo_Mari.opponent1}! {playingStrategies_Gallo_Mari.casella_opponent}-{playingStrategies_Gallo_Mari.casella_player}")
             #messagebox.showinfo("Fine partita", "La partita è terminata.")
 
     # Funzione per eseguire il turno del giocatore.
